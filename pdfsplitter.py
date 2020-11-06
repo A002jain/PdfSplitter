@@ -24,7 +24,6 @@ class PdfFile:
 		pdf_file = PdfFileReader(self.inputFileName)
 		pdfWriter = PdfFileWriter()
 		for i in range(startPage-1,lastPage):
-			print(i)
 			pdfWriter.addPage(pdf_File.getPage(i))
 		outputPdf = open(self.outputFileName,mode ='wb')
 		pdfWriter.write(outputPdf)
@@ -109,9 +108,22 @@ class CLIWrapper:
 		print("-help check basic usage")	
 
 	def manualInput(self):
+		args = []
 		inputFileName = input("Enter Pdf Path:")
-		outputFileName = os.getcwd()+"/"+input("Enter Output File Name:")
-		self.callSplitter(inputFileName,outputFileName)
+		outputFileName = input("Enter Output File Name:")
+		if(inputFileName !=""):
+			args.append("-src")
+			args.append(inputFileName)
+		else:
+			print("Source pdf not specified")
+			main()
+			return "block"
+		if(outputFileName !=""):
+			args.append("-des")
+			args.append(outputFileName)
+		print(args)
+		self.argsInput(args)
+
 	
 	def callSplitter(self,inputFileName,outputFileName):
 		startPage = int(input("Start Page No.:"))
