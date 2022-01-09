@@ -1,5 +1,7 @@
 import argparse
-from pdf.pdf_services import split, merge
+from pdf.pdf_services import split
+from pdf.pdf_services import merge
+from pdf.pdf_services import pdf_to_doc
 
 VERSION = "1.1.0"
 parser = argparse.ArgumentParser(description="PDF Services :)")
@@ -9,6 +11,7 @@ parser.add_argument("-i", "--input_pdf", help="Input PDF file or files", nargs="
 parser.add_argument("-v", "--version", help="App version", action="store_true")
 parser.add_argument("-m", "--merge", help="merge PDFs", action="store_true")
 parser.add_argument("-s", "--split", help="split PDFs", action="store_true")
+parser.add_argument("-c", "--convert", help="convert PDF to Doc", action="store_true")
 
 
 def get_input_files():
@@ -31,5 +34,7 @@ if __name__ == '__main__':
             split(input_pdf=input_file)
         elif args.merge:
             merge(pdf_file_lists=input_file)
+        elif args.convert:
+            pdf_to_doc(input_pdf=input_file)
         else:
             print("either user -s(Split) or -m(Merge) service")

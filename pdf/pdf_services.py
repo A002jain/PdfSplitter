@@ -4,6 +4,13 @@ from PyPDF2 import PdfFileMerger
 from pdf.utils import get_out_pdf_name
 
 
+def _pdf_to_doc(input_pdf):
+    with open(input_pdf, mode='rb') as f:
+        reader = PdfFileReader(f)
+        page = reader.getPage(0)
+        print(page.extractText())
+
+
 def _split(input_pdf, output_pdf, startPage, lastPage):
     pdf_file = PdfFileReader(input_pdf)
     pdfWriter = PdfFileWriter()
@@ -41,3 +48,7 @@ def merge(pdf_file_lists):
     out_path = get_out_pdf_name()
     _merge(pdf_file_lists, out_path)
 
+
+def pdf_to_doc(input_pdf):
+    for pdf_file in input_pdf:
+        _pdf_to_doc(pdf_file)
